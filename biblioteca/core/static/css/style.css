@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
     background-color: lightblue;
   }
@@ -14,4 +15,22 @@ body {
     text-align: center;
   }
   
+=======
+body {
+    background-color: lightblue;
+  }
+  
+  h1 {
+    color: navy;
+    margin-left: 30px;
+    text-align: center;
+  }
+
+  h2 {
+    color: navy;
+    margin-left: 30px;
+    text-align: center;
+  }
+  
+>>>>>>> 89d95d6168a52ef6ca3eed0cc40ea59491c33c66
   
