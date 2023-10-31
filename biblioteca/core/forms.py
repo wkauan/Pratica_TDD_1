@@ -12,13 +12,16 @@ class LivroForm(forms.ModelForm):
 
     class Meta:
         model = LivroModel
-        fields = ['titulo', 'editora']
+        fields = ['titulo', 'editora', 'autor']
         error_messages = {
             'titulo': {
                 'required': ("Informe o título do livro."),
             },
             'editora': {
                 'required': ("Informe a editora do livro."),
+            },
+            'autor': {
+                'required': ("Informe o autor do livro"),
             },
         }
 
@@ -31,6 +34,11 @@ class LivroForm(forms.ModelForm):
         editora = self.cleaned_data['editora']
         validate_title(editora)
         return editora
+
+    def clean_autor(self):
+        autor = self.cleaned_data['autor']
+        validate_title(autor)
+        return autor
 
     def clean(self):
         self.cleaned_data = super().clean()
