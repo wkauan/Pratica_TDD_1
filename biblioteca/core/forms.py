@@ -12,7 +12,7 @@ class LivroForm(forms.ModelForm):
 
     class Meta:
         model = LivroModel
-        fields = ['titulo', 'editora', 'autor', 'isbn', 'numPages']
+        fields = ['titulo', 'editora', 'autor', 'isbn', 'numPages', 'anoEscrita']
         error_messages = {
             'titulo': {
                 'required': ("Informe o título do livro."),
@@ -28,6 +28,9 @@ class LivroForm(forms.ModelForm):
             },
             'numPages': {
                 'required': ("Informe o número de páginas do liro"),
+            },
+            'anoEscrita': {
+                'required': {"Informe o ano que a obra foi escrita"},
             },
         }
 
@@ -55,6 +58,11 @@ class LivroForm(forms.ModelForm):
         numPages = self.cleaned_data['numPages']
         validate_title(numPages)
         return numPages
+
+    def clean_anoEscrita(self):
+        anoEscrita = self.cleaned_data['anoEscrita']
+        validate_title(anoEscrita)
+        return anoEscrita
 
     def clean(self):
         self.cleaned_data = super().clean()

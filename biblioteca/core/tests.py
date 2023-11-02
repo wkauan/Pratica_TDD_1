@@ -74,7 +74,8 @@ class CadastroPostOk(TestCase):
                 'editora': 'editora Brasil',
                 'autor':'Machado de Assis',
                 'isbn'=123456,
-                'numPages'=26}
+                'numPages'=26,
+                'anoEscrita'=2016}
         self.resp = self.client.post(r('core:cadastro'), data, follow=True)
         self.resp2 = self.client.post(r('core:cadastro'), data)
 
@@ -108,7 +109,8 @@ class CadastroPostFail(TestCase):
         data = {'titulo': 'Livro sem editora',
                 'autor':'Machado de Assis',
                 'isbn'=123456,
-                'numPages'=26}
+                'numPages'=26,
+                'anoEscrita'=2016}
         self.resp = self.client.post(r('core:cadastro'), data)
 
     def test_template_used(self):
@@ -181,7 +183,8 @@ class ListarGet_OneBook_Test(TestCase):
             editora='editora Brasil',
             autor='Machado de Assis',
             isbn=123456,
-            numPages=26)
+            numPages=26,
+            anoEscrita=2016)
         self.livro.save()
         self.resp = self.client.get(r('core:listar'), follow=True)
 
@@ -214,7 +217,8 @@ class ListarPost_OneBook_Test(TestCase):
             editora='editora Brasil',
             autor='Machado de Assis',
             isbn=123456,
-            numPages=26)
+            numPages=26,
+            anoEscrita=2016)
         self.livro.save()
         data = {'livro_id': self.livro.pk}
         self.resp = self.client.post(r('core:listar'), data)
@@ -248,7 +252,8 @@ class LivroModelModelTest(TestCase):
             editora='editora Brasil',
             autor='Machado de Assis',
             isbn=123456,
-            numPages=26)
+            numPages=26,
+            anoEscrita=2016)
         self.livro.save()
 
     def test_created(self):
@@ -258,7 +263,7 @@ class LivroModelModelTest(TestCase):
 class LivroFormTest(TestCase):
     def test_fields_in_form(self):
         form = LivroForm()
-        expected = ['titulo', 'editora', 'autor', 'isbn', 'numPages']
+        expected = ['titulo', 'editora', 'autor', 'isbn', 'numPages', 'anoEscrita']
         self.assertSequenceEqual(expected, list(form.fields))
 
     def test_form_all_OK(self):
@@ -266,7 +271,8 @@ class LivroFormTest(TestCase):
                      editora='Editora Brasil', 
                      autor='Machado de Assis',
                      isbn=123456,
-                     numPages=26)
+                     numPages=26,
+                     anoEscrita=2016)
         form = LivroForm(dados)
         errors = form.errors
         self.assertEqual({}, errors)
