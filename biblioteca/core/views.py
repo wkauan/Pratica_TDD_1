@@ -13,7 +13,7 @@ def cadastro(request):
     if request.method == 'POST':
         form_livro = LivroForm(request.POST)
         if form_livro.is_valid():
-            eleitor = LivroModel.objects.create(**form_livro.cleaned_data)
+            livro = LivroModel.objects.create(**form_livro.cleaned_data)
             return HttpResponseRedirect(reverse('core:index'))
         else:
             contexto = {'formulario_livro': form_livro}
