@@ -35,3 +35,4 @@ def listar(request):
         livros = LivroModel.objects.all()
         contexto = {'livros': livros}
         return render(request, 'listar.html', contexto)
+
