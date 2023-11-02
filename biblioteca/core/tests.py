@@ -11,7 +11,7 @@ class IndexGetTest(TestCase):
 
     def test_status_code(self):
         self.assertEqual(self.resp.status_code , HTTPStatus.OK)
-    
+
     def test_template_used(self):
         self.assertTemplateUsed(self.resp, 'index.html')
 
@@ -38,7 +38,7 @@ class IndexPostTest(TestCase):
     def test_status_code(self):
         self.assertEqual(self.resp.status_code , HTTPStatus.FOUND)
         self.assertEqual(self.resp2.status_code , HTTPStatus.OK)
-    
+
     def test_template_used(self):
         self.assertTemplateUsed(self.resp2, 'index.html')
 
@@ -49,7 +49,7 @@ class CadastroGetTest(TestCase):
 
     def test_status_code(self):
         self.assertEqual(self.resp.status_code , HTTPStatus.OK)
-    
+
     def test_template_used(self):
         self.assertTemplateUsed(self.resp, 'cadastro.html')
 
@@ -58,8 +58,8 @@ class CadastroGetTest(TestCase):
             ('<html', 1),
             ('<body>', 1),
             ('Biblioteca', 2),
-            ('<input', 5),
-            ('<br>', 5),
+            ('<input', 6),
+            ('<br>', 6),
             ('</body>', 1),
             ('</html>', 1),
         )
@@ -71,7 +71,9 @@ class CadastroGetTest(TestCase):
 class CadastroPostOk(TestCase):
     def setUp(self):
         data = {'titulo': 'Contos de Machado de Assis',
-                'editora': 'editora Brasil',}
+                'editora': 'editora Brasil',
+                'autor':'Machado de Assis',
+                'isbn'=123456}
         self.resp = self.client.post(r('core:cadastro'), data, follow=True)
         self.resp2 = self.client.post(r('core:cadastro'), data)
 
@@ -102,7 +104,9 @@ class CadastroPostOk(TestCase):
 
 class CadastroPostFail(TestCase):
     def setUp(self):
-        data = {'titulo': 'Livro sem editora',}
+        data = {'titulo': 'Livro sem editora',
+                'autor':'Machado de Assis',
+                'isbn'=123456}
         self.resp = self.client.post(r('core:cadastro'), data)
 
     def test_template_used(self):
@@ -121,10 +125,10 @@ class ListarGet_withoutBook_Test(TestCase):
 
     def test_status_code(self):
         self.assertEqual(self.resp.status_code , HTTPStatus.OK)
-    
+
     def test_template_used(self):
         self.assertTemplateUsed(self.resp, 'listar.html')
-    
+
     def test_found_html(self):
         tags = (
             ('<html', 1),
@@ -148,10 +152,10 @@ class ListarPost_withoutBook_Test(TestCase):
 
     def test_status_code(self):
         self.assertEqual(self.resp.status_code , HTTPStatus.OK)
-    
+
     def test_template_used(self):
         self.assertTemplateUsed(self.resp, 'detalhes.html')
-    
+
     def test_found_html(self):
         tags = (
             ('<html', 1),
@@ -172,16 +176,18 @@ class ListarGet_OneBook_Test(TestCase):
     def setUp(self):
         self.livro = LivroModel(
             titulo='Contos de Machado de Assis',
-            editora='editora Brasil',)
+            editora='editora Brasil',
+            autor='Machado de Assis',
+            isbn=123456)
         self.livro.save()
         self.resp = self.client.get(r('core:listar'), follow=True)
 
     def test_status_code(self):
         self.assertEqual(self.resp.status_code , HTTPStatus.OK)
-    
+
     def test_template_used(self):
         self.assertTemplateUsed(self.resp, 'listar.html')
-    
+
     def test_found_html(self):
         tags = (
             ('<html', 1),
@@ -202,17 +208,19 @@ class ListarPost_OneBook_Test(TestCase):
     def setUp(self):
         self.livro = LivroModel(
             titulo='Contos de Machado de Assis',
-            editora='editora Brasil',)
+            editora='editora Brasil',
+            autor='Machado de Assis',
+            isbn=123456)
         self.livro.save()
         data = {'livro_id': self.livro.pk}
         self.resp = self.client.post(r('core:listar'), data)
 
     def test_status_code(self):
         self.assertEqual(self.resp.status_code , HTTPStatus.OK)
-    
+
     def test_template_used(self):
         self.assertTemplateUsed(self.resp, 'detalhes.html')
-    
+
     def test_found_html(self):
         tags = (
             ('<html', 1),
@@ -220,7 +228,7 @@ class ListarPost_OneBook_Test(TestCase):
             ('Biblioteca', 2),
             ('<input', 1),
             ('Contos de Machado de Assis', 1),
-            ('<br>', 6),
+            ('<br>', 8),
             ('</body>', 1),
             ('</html>', 1),
         )
@@ -233,7 +241,9 @@ class LivroModelModelTest(TestCase):
     def setUp(self):
         self.livro = LivroModel(
             titulo='Contos de Machado de Assis',
-            editora='editora Brasil',)
+            editora='editora Brasil',
+            autor='Machado de Assis',
+            isbn=123456)
         self.livro.save()
 
     def test_created(self):
@@ -243,15 +253,18 @@ class LivroModelModelTest(TestCase):
 class LivroFormTest(TestCase):
     def test_fields_in_form(self):
         form = LivroForm()
-        expected = ['titulo', 'editora']
+        expected = ['titulo', 'editora', 'autor', 'isbn']
         self.assertSequenceEqual(expected, list(form.fields))
-    
+
     def test_form_all_OK(self):
-        dados = dict(titulo='Contos do Machado de Assis', editora='Editora Brasil')
+        dados = dict(titulo='Contos do Machado de Assis', 
+                     editora='Editora Brasil', 
+                     autor='Machado de Assis',
+                     isbn=123456)
         form = LivroForm(dados)
         errors = form.errors
         self.assertEqual({}, errors)
-        
+
     def test_form_without_data_1(self):
         dados = dict(titulo='Contos do Machado de Assis')
         form = LivroForm(dados)
@@ -267,7 +280,7 @@ class LivroFormTest(TestCase):
         errors_list = errors['titulo']
         msg = 'Informe o título do livro.'
         self.assertEqual([msg], errors_list)
-    
+
     def test_form_less_than_10_character_1(self):
         dados = dict(titulo='123', editora='Editora Brasil')
         form = LivroForm(dados)
@@ -275,7 +288,7 @@ class LivroFormTest(TestCase):
         errors_list = errors['titulo']
         msg = 'Deve ter pelo menos dez caracteres'
         self.assertEqual([msg], errors_list)
-    
+
     def test_form_less_than_10_character_2(self):
         dados = dict(titulo='Contos do Machado de Assis', editora='123')
         form = LivroForm(dados)
