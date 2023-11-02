@@ -27,10 +27,10 @@ class LivroForm(forms.ModelForm):
                 'required': ("Informe o isbn do livro"),
             },
             'numPages': {
-                'required': ("Informe o número de páginas do liro"),
+                'required': ("Informe o número de páginas do livro"),
             },
             'anoEscrita': {
-                'required': {"Informe o ano que a obra foi escrita"},
+                'required': ("Informe o ano que a obra foi escrita"),
             },
         }
 
