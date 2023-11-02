@@ -373,4 +373,3 @@ class LivroFormTest(TestCase):
         errors_list = errors['anoEscrita']
         msg = 'O ano que a obra foi escrita deve ter 4 caracteres'
         self.assertEqual([msg], errors_list)
-
