@@ -1,6 +1,6 @@
 # Prática TDD
 
-Desafio técnico para os alunos da disciplina "Desenvolvimento Web 3" e "Qualidade e Teste de Software"
+Minha solução para o desafio técnico para os alunos da disciplina "Desenvolvimento Web 3" e "Qualidade e Teste de Software"
 
 
 [O que eu devo fazer ?](https://youtu.be/ywayPV7Y648)
@@ -8,7 +8,7 @@ Desafio técnico para os alunos da disciplina "Desenvolvimento Web 3" e "Qualida
 No ambiente Linux:
 
 ```console
-git clone https://github.com/orlandosaraivajr/Pratica_TDD_1.git
+git clone https://github.com/wkauan/Pratica_TDD_1.git
 cd Pratica_TDD_1/
 virtualenv -p python3 venv
 source venv/bin/activate
@@ -24,7 +24,7 @@ python manage.py runserver
 No ambiente Windows:
 
 ```console
-git clone https://github.com/orlandosaraivajr/Pratica_TDD_1.git
+git clone https://github.com/wkauan/Pratica_TDD_1.git
 cd Pratica_TDD_1/
 virtualenv venv
 cd venv
@@ -39,7 +39,6 @@ python manage.py test
 coverage run --source='.' manage.py test 
 coverage html
 python manage.py runserver
-
 ```
 
 ### Requisitos da Sprint 1
@@ -99,5 +98,4 @@ O código fonte passará por atualizações para acomodar estes novos requisitos
 
 Você recebeu a sprint 1 com uma cobertura de teste acima de 90%.
 
->>>>>>> 89d95d6168a52ef6ca3eed0cc40ea59491c33c66
 <img src="img/cobertura_testes.png">
