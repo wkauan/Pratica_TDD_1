@@ -310,7 +310,7 @@ class LivroFormTest(TestCase):
         msg = 'Informe o ISBN do livro'
         self.assertEqual([msg], errors_list)
     
-    def test_form_without_data_3(self):
+    def test_form_without_data_5(self):
         dados = dict(editora='Editora Brasil')
         form = LivroForm(dados)
         errors = form.errors
@@ -318,7 +318,7 @@ class LivroFormTest(TestCase):
         msg = 'Informe o número de páginas do livro'
         self.assertEqual([msg], errors_list)
 
-    def test_form_without_data_3(self):
+    def test_form_without_data_6(self):
         dados = dict(editora='Editora Brasil')
         form = LivroForm(dados)
         errors = form.errors
